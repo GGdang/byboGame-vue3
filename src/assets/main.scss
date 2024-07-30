@@ -1,0 +1,25 @@
+@import './base.css';
+
+#app {
+  max-width: 375px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+
+body {
+  display: flex;
+}
+
+@for $i from 0 through 1000 {
+  .ht-#{$i} {
+    height: ($i * 4px);
+  }
+}
+
+@for $i from 0 through 1000 {
+  .wt-#{$i} {
+    width: ($i * 4px);
+  }
+}

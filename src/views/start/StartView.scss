@@ -1,0 +1,10 @@
+.diceGridContent {
+  font-size: 1.6rem;
+}
+
+.diceGrid {
+  &.active {
+    background-color: red;
+    color: white;
+  }
+}
