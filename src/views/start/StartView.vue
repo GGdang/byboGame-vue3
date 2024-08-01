@@ -2,16 +2,25 @@
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { canRollFourth, calculateScore } from '@/lib/gameLogic'
+import { getHistoryStorage, setHistoryStorage } from '@/lib/localStorage'
 const router = useRouter()
 const nowRound = ref(0)
 const totalScore = ref(0)
 const nowRoundScore = ref(0)
 const nowRoundDiceScore = ref(['-', '-', '-'])
+const nowHighestScore = ref(0)
 const prevDiceScore = ref([])
 const scoreTypeShow = ref('')
 const canRollFourthDice = ref(false)
 const askRollFourthDiceDialog = ref(false)
 const endRollRoundDialog = ref(false)
+const showEndScoreContent = ref({
+  thisRoundScore: 0,
+  thisRoundHighScore: 0,
+  averageScore: 0,
+  gamesPlayed: 0,
+  highestSingleGameScore: 0
+})
 const diceGrid = ref([1, 5, 9, 2, 6, 10, 3, 7, 11, 4, 8, 12])
 const goHome = () => {
   router.push('/')
@@ -25,15 +34,38 @@ const resetTurn = () => {
   }
 }
 
-const showEndScoreContent = () => {
-  // let averageScore = Math.round(totalScore.value / 1)
-  return (
-    `Your score is: ${totalScore.value}\n` +
-    `High Score: 16\n` +
-    `Average Score: 1\n` +
-    `Games Played: 1\n` +
-    `Highest Single Game Score: 2`
-  )
+const openGameEndDialog = () => {
+  const gameHistoryInfo = getHistoryStorage()
+  const showScoreboard = {
+    thisRoundScore: totalScore.value,
+    thisRoundHighScore: nowHighestScore.value,
+    averageScore: 0,
+    gamesPlayed: 0,
+    highestSingleGameScore: 0
+  }
+  if (!gameHistoryInfo) {
+    setHistoryStorage({
+      gamesPlayed: 1,
+      highestSingleGameScore: totalScore.value
+    })
+    showScoreboard.averageScore = totalScore.value
+    showScoreboard.gamesPlayed = 1
+    showScoreboard.highestSingleGameScore = totalScore.value
+  } else {
+    const gamesPlayed = gameHistoryInfo.gamesPlayed
+    const highestSingleGameScore =
+      gameHistoryInfo.highestSingleGameScore > nowHighestScore.value
+        ? gameHistoryInfo.highestSingleGameScore
+        : nowHighestScore.value
+    setHistoryStorage({
+      gamesPlayed: gamesPlayed + 1,
+      highestSingleGameScore: highestSingleGameScore
+    })
+    showScoreboard.gamesPlayed = gamesPlayed
+    showScoreboard.highestSingleGameScore = highestSingleGameScore
+  }
+  showEndScoreContent.value = showScoreboard
+  endRollRoundDialog.value = true
 }
 
 const endTurn = () => {
@@ -44,6 +76,14 @@ const endTurn = () => {
   nowRoundDiceScore.value = ['-', '-', '-']
   scoreTypeShow.value = ''
   prevDiceScore.value = []
+  nowHighestScore.value = 0
+  showEndScoreContent.value = {
+    thisRoundScore: 0,
+    thisRoundHighScore: 0,
+    averageScore: 0,
+    gamesPlayed: 0,
+    highestSingleGameScore: 0
+  }
 }
 
 const rollDice = () => {
@@ -51,9 +91,6 @@ const rollDice = () => {
     resetTurn()
     nowRound.value++
   }
-  //   const atTimeRollScore =
-  //     nowRoundDiceScore.value.length === 3 ? [1, 2, 3] : Math.floor(Math.random() * 12) + 1
-
   const atTimeRollScore =
     nowRoundDiceScore.value.length === 3
       ? Array(3)
@@ -70,7 +107,7 @@ const rollDice = () => {
   const { roundScore, scoreType } = calculateScore(nowRoundDiceScore.value, prevDiceScore.value)
   scoreTypeShow.value = scoreType
   nowRoundScore.value = roundScore
-
+  nowHighestScore.value = nowHighestScore.value < roundScore ? roundScore : nowHighestScore.value
   totalScore.value = totalScore.value + roundScore
   if (nowRoundDiceScore.value.length === 3) {
     prevDiceScore.value = [...prevDiceScore.value, atTimeRollScore]
@@ -116,7 +153,7 @@ const switchFourthDialog = (status) => {
         <v-btn color="green-lighten-4" @click="rollDice"> ROLL DICE </v-btn>
       </v-col>
       <v-col v-if="nowRound === 13" cols="6">
-        <v-btn color="green-lighten-4" @click="endRollRoundDialog = true"> End this round </v-btn>
+        <v-btn color="green-lighten-4" @click="openGameEndDialog"> End this round </v-btn>
       </v-col>
       <v-col cols="6">
         <v-btn color="red-darken-3" @click="goHome"> GO TO HOME </v-btn>
@@ -149,13 +186,24 @@ const switchFourthDialog = (status) => {
       </template>
     </v-card>
   </v-dialog>
+
   <v-dialog v-model="endRollRoundDialog" width="auto">
-    <v-card max-width="350" persistent title="Scoreboard" :text="showEndScoreContent()">
-      <template v-slot:actions>
-        <v-btn @click="goHome"> Go to Home </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn @click="endTurn"> Paly Again </v-btn>
-      </template>
+    <v-card class="pa-3" max-width="350" persistent>
+      <v-card-title> Scoreboard </v-card-title>
+      <div class="px-5">
+        <p class="mb-1">Your score is: {{ showEndScoreContent.thisRoundScore }}</p>
+        <p class="mb-1">High Score:{{ showEndScoreContent.thisRoundHighScore }}</p>
+        <p class="mb-1">Games Played: {{ showEndScoreContent.gamesPlayed }}</p>
+        <p class="mb-1">
+          Highest Single Game Score:{{ showEndScoreContent.highestSingleGameScore }}
+        </p>
+      </div>
+      <div class="ht-5"></div>
+      <div class="d-flex">
+        <v-btn color="green-lighten-4" @click="endTurn"> Paly Again </v-btn>
+        <div class="wt-4"></div>
+        <v-btn color="red-darken-3" @click="goHome"> Go to Home </v-btn>
+      </div>
     </v-card>
   </v-dialog>
 </template>

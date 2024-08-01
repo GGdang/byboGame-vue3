@@ -11,6 +11,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@tonconnect/ui": "^2.0.6",
     "pinia": "^2.2.0",
     "sass": "^1.77.8",
     "vue": "^3.4.29",
