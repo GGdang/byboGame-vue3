@@ -58,6 +58,11 @@
   font-weight: normal;
 }
 
+html,
+body {
+  touch-action: manipulation;
+}
+
 body {
   min-height: 100vh;
   color: var(--color-text);
