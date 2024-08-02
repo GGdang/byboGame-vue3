@@ -91,12 +91,13 @@ const rollDice = () => {
     resetTurn()
     nowRound.value++
   }
+
   const atTimeRollScore =
     nowRoundDiceScore.value.length === 3
       ? Array(3)
           .fill()
           .map(() => Math.floor(Math.random() * 12) + 1)
-      : [...nowRoundDiceScore.value, Math.floor(Math.random() * 12) + 1]
+      : Math.floor(Math.random() * 12) + 1
 
   if (nowRoundDiceScore.value.length === 3) {
     nowRoundDiceScore.value = atTimeRollScore
@@ -171,6 +172,7 @@ const switchFourthDialog = (status) => {
         </div>
       </v-col>
     </v-row>
+    <div class="ht-20"></div>
   </main>
   <v-dialog v-model="askRollFourthDiceDialog" width="auto">
     <v-card
