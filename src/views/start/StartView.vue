@@ -172,7 +172,7 @@ const switchFourthDialog = (status) => {
         </div>
       </v-col>
     </v-row>
-    <div class="ht-20"></div>
+    <div class="ht-10"></div>
   </main>
   <v-dialog v-model="askRollFourthDiceDialog" width="auto">
     <v-card
