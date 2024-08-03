@@ -9,6 +9,7 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/byboGame-vue3/',
   plugins: [
     vue(),
     vueJsx(),
@@ -19,7 +20,6 @@ export default defineConfig({
       protocolImports: true
     })
   ],
-  base: '/byboGame-vue3/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -31,6 +31,10 @@ export default defineConfig({
       Pragma: 'no-cache',
       Expires: '0'
     }
+  },
+  define: {
+    __VUE_OPTIONS_API__: false
+    // global: 'globalThis'
   }
   // build: {
   //   target: 'es2020',
@@ -38,7 +42,4 @@ export default defineConfig({
   //     include: [/node_modules/, /@tonconnect\/sdk/]
   //   }
   // },
-  // define: {
-  //   global: 'globalThis'
-  // }
 })
