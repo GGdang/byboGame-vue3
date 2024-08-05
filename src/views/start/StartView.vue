@@ -54,9 +54,9 @@ const openGameEndDialog = () => {
   } else {
     const gamesPlayed = gameHistoryInfo.gamesPlayed
     const highestSingleGameScore =
-      gameHistoryInfo.highestSingleGameScore > nowHighestScore.value
+      gameHistoryInfo.highestSingleGameScore > totalScore.value
         ? gameHistoryInfo.highestSingleGameScore
-        : nowHighestScore.value
+        : totalScore.value
     setHistoryStorage({
       gamesPlayed: gamesPlayed + 1,
       highestSingleGameScore: highestSingleGameScore
@@ -189,7 +189,7 @@ const switchFourthDialog = (status) => {
     </v-card>
   </v-dialog>
 
-  <v-dialog v-model="endRollRoundDialog" width="auto">
+  <v-dialog persistent v-model="endRollRoundDialog" width="auto">
     <v-card class="pa-3" max-width="350" persistent>
       <v-card-title> Scoreboard </v-card-title>
       <div class="px-5">
