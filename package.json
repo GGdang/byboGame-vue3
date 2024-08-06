@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tonconnect/ui": "^2.0.6",
+    "eruda": "^3.2.1",
     "pinia": "^2.2.0",
     "sass": "^1.77.8",
     "vite-plugin-commonjs": "^0.10.1",

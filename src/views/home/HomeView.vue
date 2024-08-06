@@ -8,7 +8,8 @@ const gotoStartGamePage = () => {
   router.push('/start')
 }
 onMounted(() => {
-  const params = new URLSearchParams(Window?.Telegram?.WebApp?.initData)
+  const params = new URLSearchParams(window?.Telegram?.WebApp?.initData)
+  console.log('---Window---', window)
   const userData = Object.fromEntries(params)
   if (Object.keys(userData).length > 0) {
     telegramUserInfo.value = JSON.parse(userData.user)

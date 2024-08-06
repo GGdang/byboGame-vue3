@@ -1,5 +1,7 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import eruda from 'eruda'
+eruda.init()
 </script>
 
 <template>
