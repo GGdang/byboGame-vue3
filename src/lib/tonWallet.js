@@ -53,7 +53,7 @@ async function initializeConnector() {
     if (walletInfo) {
       walletAddress.value = walletInfo.account.address
       console.log('Wallet connected:', walletAddress.value)
-      returnToTelegram()
+      // returnToTelegram()
     } else {
       walletAddress.value = ''
       console.log('Wallet disconnected')
