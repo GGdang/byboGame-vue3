@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useConnectWallet, useDisconnectWallet, walletAddress } from '@/lib/tonWallet'
 const telegramUserInfo = ref({})
 const router = useRouter()
 
@@ -9,7 +10,6 @@ const gotoStartGamePage = () => {
 }
 onMounted(() => {
   const params = new URLSearchParams(window?.Telegram?.WebApp?.initData)
-  console.log('---Window---', window)
   const userData = Object.fromEntries(params)
   if (Object.keys(userData).length > 0) {
     telegramUserInfo.value = JSON.parse(userData.user)
@@ -27,6 +27,15 @@ onMounted(() => {
       <p>
         {{ telegramUserInfo }}
       </p>
+    </div>
+    <div>
+      <v-btn @click="useConnectWallet"> Tonkeeper Wallet Connect </v-btn>
+    </div>
+    <div class="py-5">
+      {{ walletAddress }}
+    </div>
+    <div>
+      <v-btn @click="useDisconnectWallet"> Tonkeeper Wallet Disconnect </v-btn>
     </div>
   </main>
 </template>
