@@ -1,12 +1,35 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import TonConnect from '@tonconnect/sdk'
 import TonWeb from 'tonweb'
 
 let connector = ref(null)
-export let walletAddress = ref('abcd')
+export let walletAddress = ref('')
+
+export const formattedAddress = computed(() => {
+  if (walletAddress.value !== '') {
+    return new TonWeb.utils.Address(walletAddress.value).toString(true, true, true)
+  }
+  return ''
+})
+
+export const nonBounceableAddress = computed(() => {
+  if (walletAddress.value !== '') {
+    return new TonWeb.utils.Address(walletAddress.value).toString(true, true, false)
+  }
+  return ''
+})
+
+export const rawAddress = computed(() => {
+  if (walletAddress.value !== '') {
+    return new TonWeb.utils.Address(walletAddress.value).toString(false, false, false)
+  }
+  return ''
+})
 
 const returnToTelegram = () => {
+  console.log(1)
   if (window.Telegram && window.Telegram.WebApp) {
+    console.log(2)
     window.Telegram.WebApp.close()
   }
 }
@@ -39,16 +62,6 @@ async function initializeConnector() {
 
   restoreConnection()
 }
-
-// 在模塊導入時初始化 connector
-;(async () => {
-  try {
-    await initializeConnector()
-    console.log('Connector initialized:', connector.value)
-  } catch (error) {
-    console.error('Failed to initialize connector:', error)
-  }
-})()
 
 export const useConnectWallet = async () => {
   if (connector.value === null) {
@@ -83,3 +96,13 @@ export const useDisconnectWallet = async () => {
     console.error('Failed to disconnect wallet:', e)
   }
 }
+
+// 在模塊導入時初始化 connector
+;(async () => {
+  try {
+    await initializeConnector()
+    console.log('Connector initialized:', connector.value)
+  } catch (error) {
+    console.error('Failed to initialize connector:', error)
+  }
+})()
