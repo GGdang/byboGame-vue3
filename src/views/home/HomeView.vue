@@ -9,6 +9,7 @@ import {
   nonBounceableAddress,
   rawAddress
 } from '@/lib/tonWallet'
+import TonWallet from '@/components/TonWallet.vue'
 const telegramUserInfo = ref({})
 const router = useRouter()
 
@@ -47,6 +48,8 @@ onMounted(() => {
     <div>
       <v-btn @click="useDisconnectWallet"> Tonkeeper Wallet Disconnect </v-btn>
     </div>
+    <div class="ht-10"></div>
+    <TonWallet></TonWallet>
   </main>
 </template>
 

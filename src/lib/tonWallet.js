@@ -27,9 +27,7 @@ export const rawAddress = computed(() => {
 })
 
 const returnToTelegram = () => {
-  console.log(1)
   if (window.Telegram && window.Telegram.WebApp) {
-    console.log(2)
     window.Telegram.WebApp.close()
   }
 }

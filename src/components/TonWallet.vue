@@ -1,7 +1,7 @@
 <template>
   <div class="telegram-buttons">
-    <button v-if="!walletAddress" @click="connectWallet">Connect Wallet</button>
-    <button v-else @click="disconnectWallet">Disconnect Wallet</button>
+    <v-btn v-if="!walletAddress" @click="connectWallet">Steve Connect Wallet</v-btn>
+    <v-btn v-else @click="disconnectWallet">Disconnect Wallet</v-btn>
     <p v-if="walletAddress">Wallet Address (Bounceable): {{ formattedAddress }}</p>
     <p v-if="walletAddress">Wallet Address (Non-bounceable): {{ nonBounceableAddress }}</p>
     <p v-if="walletAddress">Wallet Address (RAW): {{ rawAddress }}</p>
@@ -120,16 +120,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.telegram-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-button {
-  padding: 10px;
-  font-size: 16px;
-}
-</style>
