@@ -1,14 +1,14 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import {
-  useConnectWallet,
-  useDisconnectWallet,
-  walletAddress,
-  formattedAddress,
-  nonBounceableAddress,
-  rawAddress
-} from '@/lib/tonWallet'
+// import {
+//   useConnectWallet,
+//   useDisconnectWallet,
+//   walletAddress,
+//   formattedAddress,
+//   nonBounceableAddress,
+//   rawAddress
+// } from '@/lib/tonWallet'
 import TonWallet from '@/components/TonWallet.vue'
 const telegramUserInfo = ref({})
 const router = useRouter()
@@ -36,7 +36,7 @@ onMounted(() => {
         {{ telegramUserInfo }}
       </p>
     </div>
-    <div>
+    <!-- <div>
       <v-btn @click="useConnectWallet"> Tonkeeper Wallet Connect </v-btn>
     </div>
     <div class="py-5">
@@ -48,6 +48,7 @@ onMounted(() => {
     <div>
       <v-btn @click="useDisconnectWallet"> Tonkeeper Wallet Disconnect </v-btn>
     </div>
+     -->
     <div class="ht-10"></div>
     <TonWallet></TonWallet>
   </main>
