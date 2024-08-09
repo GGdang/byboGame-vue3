@@ -1,15 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-// import {
-//   useConnectWallet,
-//   useDisconnectWallet,
-//   walletAddress,
-//   formattedAddress,
-//   nonBounceableAddress,
-//   rawAddress
-// } from '@/lib/tonWallet'
-import TonWallet from '@/components/TonWallet.vue'
+
+import { initTelegramWebApp } from '@/lib/telegramWebApp'
 const telegramUserInfo = ref({})
 const router = useRouter()
 
@@ -17,6 +10,11 @@ const gotoStartGamePage = () => {
   router.push('/start')
 }
 onMounted(() => {
+  try {
+    initTelegramWebApp()
+  } catch (e) {
+    console.error('Failed to initialize Telegram WebApp:', e)
+  }
   const params = new URLSearchParams(window?.Telegram?.WebApp?.initData)
   const userData = Object.fromEntries(params)
   if (Object.keys(userData).length > 0) {
@@ -36,21 +34,7 @@ onMounted(() => {
         {{ telegramUserInfo }}
       </p>
     </div>
-    <!-- <div>
-      <v-btn @click="useConnectWallet"> Tonkeeper Wallet Connect </v-btn>
-    </div>
-    <div class="py-5">
-      <p>walletAddress: {{ walletAddress }}</p>
-      <p>formattedAddress: {{ formattedAddress }}</p>
-      <p>nonBounceableAddress: {{ nonBounceableAddress }}</p>
-      <p>rawAddress: {{ rawAddress }}</p>
-    </div>
-    <div>
-      <v-btn @click="useDisconnectWallet"> Tonkeeper Wallet Disconnect </v-btn>
-    </div>
-     -->
     <div class="ht-10"></div>
-    <TonWallet></TonWallet>
   </main>
 </template>
 
