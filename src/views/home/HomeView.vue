@@ -3,7 +3,11 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { initTelegramWebApp } from '@/lib/telegramWebApp'
+import { TonConnectButton, useTonWallet, useTonAddress } from '@townsquarelabs/ui-vue'
 const telegramUserInfo = ref({})
+const userFriendlyAddress = useTonAddress()
+const rawAddress = useTonAddress(false)
+const wallet = useTonWallet()
 const router = useRouter()
 
 const gotoStartGamePage = () => {
@@ -35,6 +39,15 @@ onMounted(() => {
       </p>
     </div>
     <div class="ht-10"></div>
+    <div>
+      <TonConnectButton className="custom-class" :styles="{ color: 'red' }"> </TonConnectButton>
+    </div>
+    <div v-if="wallet">
+      <div>Connected Wallet: {{ wallet.name }}</div>
+      <div>Device: {{ wallet.device.appName }}</div>
+      <div>User-friendly address: {{ userFriendlyAddress }}</div>
+      <div>Raw address: {{ rawAddress }}</div>
+    </div>
   </main>
 </template>
 

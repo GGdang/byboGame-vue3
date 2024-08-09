@@ -4,7 +4,7 @@ import eruda from 'eruda'
 import { TonConnectUIProvider, THEME } from '@townsquarelabs/ui-vue'
 eruda.init()
 const options = {
-  manifestUrl: 'https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json',
+  manifestUrl: 'https://ggdang.github.io/byboGame-vue3/tonconnect-manifest.json',
   uiPreferences: { theme: THEME.DARK },
   walletsListConfiguration: {
     includeWallets: [
@@ -32,7 +32,7 @@ const options = {
     ]
   },
   actionsConfiguration: {
-    twaReturnUrl: 'https://t.me/DemoDappWithTonConnectBot/demo'
+    twaReturnUrl: 'https://t.me/miniapptest2_bot'
   }
 }
 </script>
