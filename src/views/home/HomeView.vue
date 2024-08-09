@@ -9,9 +9,13 @@ const userFriendlyAddress = useTonAddress()
 const rawAddress = useTonAddress(false)
 const wallet = useTonWallet()
 const router = useRouter()
-
+const isNotTelegramOpenDialog = ref(false)
 const gotoStartGamePage = () => {
-  router.push('/start')
+  if (telegramUserInfo.value.id) {
+    router.push('/start')
+  } else {
+    isNotTelegramOpenDialog.value = true
+  }
 }
 onMounted(() => {
   try {
@@ -48,6 +52,17 @@ onMounted(() => {
       <div>User-friendly address: {{ userFriendlyAddress }}</div>
       <div>Raw address: {{ rawAddress }}</div>
     </div>
+    <v-dialog persistent v-model="isNotTelegramOpenDialog" width="auto">
+      <v-card class="pa-3" max-width="350" persistent>
+        <div class="px-5">
+          <p>請用 telegram 開啟遊戲</p>
+        </div>
+        <div class="ht-5"></div>
+        <div class="d-flex justify-center">
+          <v-btn color="green-lighten-4" @click="isNotTelegramOpenDialog = false"> Close </v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
   </main>
 </template>
 
