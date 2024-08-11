@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { initTelegramWebApp } from '@/lib/telegramWebApp'
@@ -10,13 +10,20 @@ const rawAddress = useTonAddress(false)
 const wallet = useTonWallet()
 const router = useRouter()
 const isNotTelegramOpenDialog = ref(false)
+
+const isDev = computed(() => {
+  // eslint-disable-next-line no-undef
+  return process.env.NODE_ENV === 'development'
+})
+
 const gotoStartGamePage = () => {
-  if (telegramUserInfo.value.id) {
+  if (telegramUserInfo.value.id || isDev) {
     router.push('/start')
   } else {
     isNotTelegramOpenDialog.value = true
   }
 }
+
 onMounted(() => {
   try {
     initTelegramWebApp()
