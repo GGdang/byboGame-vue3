@@ -1,11 +1,11 @@
 @import './base.css';
 
 #app {
-  max-width: 375px;
+  display: flex;
+  justify-content: center;
   width: 100%;
   margin: 0 auto;
   padding: 1rem;
-  font-weight: normal;
 }
 
 body {
