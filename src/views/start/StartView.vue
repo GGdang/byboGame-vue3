@@ -3,6 +3,14 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { canRollFourth, calculateScore } from '@/lib/gameLogic'
 import { getHistoryStorage, setHistoryStorage } from '@/lib/localStorage'
+import { useGlobalStore } from '@/store/global'
+import {
+  callUpdatePoints,
+  updateHighestScoreURL,
+  getUserByTelegramUserIdURL,
+  getLeaderboardURL
+} from '@/api/dice'
+const globalStore = useGlobalStore
 const router = useRouter()
 const nowRound = ref(0)
 const totalScore = ref(0)

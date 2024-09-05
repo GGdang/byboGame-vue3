@@ -1,5 +1,5 @@
 import apiHandler, { baseURL } from '@/api/api'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/vue-query'
 
 const queryKey = {
   getUserByTelegramUserId: 'getUserByTelegramUserId',
@@ -150,10 +150,16 @@ export const callUpdateTonWalletAddress = async (userId, data) => {
 export const getUserByTelegramUserIdURL = (telegramUserId) =>
   `${baseURL}/users/telegram/${telegramUserId}`
 
-export const callGetUserByTelegramUserId = async (telegramUserId) => {
+export const callGetUserByTelegramUserId = (telegramUserId) => {
   return useQuery({
     queryKey: [queryKey.getUserByTelegramUserId, telegramUserId],
-    queryFn: () => apiHandler.get(getUserByTelegramUserIdURL(telegramUserId))
+    queryFn: async () => {
+      // if (!telegramUserId) return null
+      console.log('--telegramUserId--', !!telegramUserId)
+      const res = await apiHandler.get(getUserByTelegramUserIdURL(telegramUserId))
+      return res
+    },
+    enabled: false
   })
 }
 

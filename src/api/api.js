@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse, isAxiosError } from 'axios'
+import axios from 'axios'
 
 export const baseURL = `http://20.189.118.35:8080`
 // Create a new Axios instance
