@@ -16,6 +16,10 @@ const telegramUserInfo = ref({
   language_code: 'zh-hans',
   allows_write_to_pm: true
 })
+const size = ref({
+  width: 0,
+  height: 0
+})
 const userFriendlyAddress = useTonAddress()
 const rawAddress = useTonAddress(false)
 const wallet = useTonWallet()
@@ -44,10 +48,9 @@ const gotoStartGamePage = async () => {
 }
 
 onMounted(async () => {
-  console.log('--window.width--', window.innerWidth)
-  console.log('--window.height--', window.innerHeight)
   console.log('--window--', window)
-
+  size.value.width = window.innerWidth
+  size.value.height = window.innerHeight
   // try {
   //   console.log('telegram')
   //   initTelegramWebApp()
@@ -78,6 +81,7 @@ onMounted(async () => {
       <v-btn class="bg-blue" @click="gotoStartGamePage"> Start </v-btn>
     </div>
     <div>
+      <p>{{ size }}</p>
       <p>{{ telegramUserInfo }}</p>
     </div>
     <div class="ht-10"></div>
