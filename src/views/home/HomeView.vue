@@ -5,6 +5,8 @@ import { initTelegramWebApp } from '@/lib/telegramWebApp'
 import { TonConnectButton, useTonWallet, useTonAddress } from '@townsquarelabs/ui-vue'
 import { useGlobalStore } from '@/store/global'
 import { callCreateUser, callGetUserByTelegramUserId } from '@/api/dice'
+import LoadingView from './components/Loading/LoadingView.vue'
+import MainView from './components/Main/MainView.vue'
 const props = defineProps(['referralCode'])
 
 const globalStore = useGlobalStore
@@ -16,10 +18,12 @@ const telegramUserInfo = ref({
   language_code: 'zh-hans',
   allows_write_to_pm: true
 })
+
 const size = ref({
   width: 0,
   height: 0
 })
+const isLoading = ref(true)
 const userFriendlyAddress = useTonAddress()
 const rawAddress = useTonAddress(false)
 const wallet = useTonWallet()
@@ -37,7 +41,7 @@ const gotoStartGamePage = async () => {
     // const res = await callCreateUser.mutateAsync({
     //   telegram_user_id: telegramUserInfo.value.id,
     //   telegram_username: telegramUserInfo.value.username,
-    //   referral_code: props.referralCode ? props.referralCode : ''
+    //   referral_code: props.referralCode ? props.referralCode : 'SxvlCtVDNwBV'
     // })
     // console.log('--callCreateUser--', res)
     // globalStore.user = res.data
@@ -67,6 +71,10 @@ onMounted(async () => {
     if (telegramUserInfo.value?.id) {
       const res = await getUserByTelegramUserId()
       console.log('--res--', res)
+      const timer = setTimeout(() => {
+        clearTimeout(timer)
+        isLoading.value = false
+      }, 5000)
     }
   } catch (error) {
     console.log(error)
@@ -75,9 +83,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="h-100">
-    <h1 class="text-center">Cybo Game</h1>
-    <div class="d-flex flex-column align-center justify-center">
+  <main class="all-screen bg-black">
+    <LoadingView v-if="isLoading"></LoadingView>
+    <MainView v-if="!isLoading"></MainView>
+    <div></div>
+    <!-- <div class="d-flex flex-column align-center justify-center">
       <v-btn class="bg-blue" @click="gotoStartGamePage"> Start </v-btn>
     </div>
     <div>
@@ -104,7 +114,7 @@ onMounted(async () => {
           <v-btn color="green-lighten-4" @click="isNotTelegramOpenDialog = false"> Close </v-btn>
         </div>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </main>
 </template>
 

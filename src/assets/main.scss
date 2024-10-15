@@ -1,15 +1,118 @@
+@font-face {
+  font-face: 'kanit';
+  src: url('../assets/font/kanit/Kanit-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-face: 'kanit';
+  src: url('../assets/font/kanit/Kanit-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+@font-face {
+  font-face: 'kanit';
+  src: url('../assets/font/kanit/Kanit-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-face: 'kanit';
+  src: url('../assets/font/kanit/Kanit-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-face: 'kanit';
+  src: url('../assets/font/kanit/Kanit-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-face: 'kanit';
+  src: url('../assets/font/kanit/Kanit-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-face: 'kanit';
+  src: url('../assets/font/kanit/Kanit-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-face: 'kanit';
+  src: url('../assets/font/kanit/Kanit-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-face: 'kanit';
+  src: url('../assets/font/kanit/Kanit-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-face: 'kanit';
+  src: url('../assets/font/kanit/Kanit-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'ramabhabra';
+  src: url('../assets/font/ramabhadra/Ramabhadra-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'baloo';
+  src: url('../assets/font/baloo/Baloo2-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
 @import './base.css';
 
 #app {
-  display: flex;
-  justify-content: center;
+  font-family: 'ramabhabra';
+}
+body {
   width: 100%;
-  margin: 0 auto;
-  padding: 1rem;
+  height: 100%;
+  background-color: red;
 }
 
-body {
-  display: flex;
+.all-screen {
+  width: 100vw;
+  height: 100vh;
+}
+
+.phone-size {
+  max-width: 375px;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.font-baloo {
+  font-family: 'baloo';
+}
+
+@for $i from 1 through 9 {
+  .fw-#{$i} {
+    font-weight: ($i * 100);
+  }
+}
+
+@for $i from 0 through 1000 {
+  .fs-#{$i} {
+    font-size: ($i * 0.5rem);
+  }
+}
+
+@for $i from 0 through 1000 {
+  .lh-#{$i} {
+    line-height: ($i * 0.5rem);
+  }
 }
 
 @for $i from 0 through 1000 {
@@ -21,5 +124,47 @@ body {
 @for $i from 0 through 1000 {
   .wt-#{$i} {
     width: ($i * 4px);
+  }
+}
+
+$colors: #7d8cbf, #bd4e04, #9a9415, #4a5788;
+
+@for $i from 1 through length($colors) {
+  .text-primary-#{$i * 100} {
+    color: nth($colors, $i);
+  }
+}
+
+@for $i from 1 through length($colors) {
+  .bg-primary-#{$i * 100} {
+    background-color: nth($colors, $i);
+  }
+}
+
+.liner-gradient-yellow {
+  background-image: linear-gradient(to bottom, #f4f2bc, #dfda61);
+  &:hover {
+    background-image: linear-gradient(to bottom, lighten(#f4f2bc, 10%), lighten(#dfda61, 10%));
+  }
+  &:active {
+    background-image: linear-gradient(to bottom, darken(#f4f2bc, 10%), darken(#dfda61, 10%));
+  }
+}
+.liner-gradient-blue {
+  background-image: linear-gradient(to bottom, #7d8cbf, #526299);
+  &:hover {
+    background-image: linear-gradient(to bottom, lighten(#7d8cbf, 10%), lighten(#526299, 10%));
+  }
+  &:active {
+    background-image: linear-gradient(to bottom, darken(#7d8cbf, 10%), darken(#526299, 10%));
+  }
+}
+.liner-gradient-green {
+  background-image: linear-gradient(to bottom, #39f175, #11ea92);
+  &:hover {
+    background-image: linear-gradient(to bottom, lighten(#39f175, 10%), lighten(#11ea92, 10%));
+  }
+  &:active {
+    background-image: linear-gradient(to bottom, darken(#39f175, 10%), darken(#11ea92, 10%));
   }
 }
